@@ -7,7 +7,7 @@ module.exports = {
   // 推送的
   pushPrefix: 'jackness1208',
   // 自动 更新 history
-  rewriteHistory: true,
+  rewriteHistory: false,
   // 加速地址
   registryMirror: 'registry.docker-cn.com'
 };
