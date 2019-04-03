@@ -58,10 +58,4 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
   && sudo dpkg -i google-chrome*.deb \
   && apt-get install -f -y
 
-# ENV CHROMEDRIVER_FORCE_DOWNLOAD true
-# ENV CHROMEDRIVER_FILEPATH /usr/local/bin/chromedriver
-# RUN export DBUS_SESSION_BUS_ADDRESS=/dev/null
-
-EXPOSE 9515
-EXPOSE 7000
 CMD Xvfb -ac :7 -screen 0 1280x1024x8
