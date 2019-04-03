@@ -1,4 +1,4 @@
-FROM ubuntu:bionic-20181204
+FROM ubuntu:16.04
 LABEL authors="liudaojie <liudaojie@yy.com>"
 
 # apt 加速
@@ -9,6 +9,7 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu bionic main universe\n" > /etc/a
 
 # apt 基础组件安装
 RUN apt-get update
+RUN apt-get -y upgrade
 RUN apt-get -y install \
   software-properties-common \
   ca-certificates \
@@ -17,8 +18,21 @@ RUN apt-get -y install \
   yarn \
   wget \
   vim \
-  git
-
+  git \
+  unzip \
+  apt-utils \
+  xz-utils \
+  bzip2 \
+  apt-transport-https \
+  jq \
+  libxml-xpath-perl \
+  xfonts-100dpi \
+  xfonts-75dpi \
+  xfonts-scalable \
+  xfonts-cyrillic \
+  xvfb \
+  x11-apps \ 
+  imagemagick
 
 # 安装 jdk
 RUN add-apt-repository ppa:webupd8team/java -y \
@@ -35,19 +49,19 @@ RUN npm i npm@latest -g \
   && npm config set unsafe-perm true
 
 # 安装 chrome
-RUN sudo apt-get -y install \
-  fonts-liberation \
-  libappindicator3-1 \
-  libasound2 \
-  libatk-bridge2.0-0 \
-  libatspi2.0-0 \
-  libgtk-3-0 \
-  libx11-xcb1 \
-  xdg-utils \
-  libxss1 \
-  libappindicator1 \
-  libindicator7
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get update -yq
+RUN apt-get -yqq install google-chrome-stable
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
   && sudo dpkg -i google-chrome*.deb \
   && apt-get install -f -y
+
+# ENV CHROMEDRIVER_FORCE_DOWNLOAD true
+# ENV CHROMEDRIVER_FILEPATH /usr/local/bin/chromedriver
+# RUN export DBUS_SESSION_BUS_ADDRESS=/dev/null
+
+EXPOSE 9515
+EXPOSE 7000
+CMD Xvfb -ac :7 -screen 0 1280x1024x8
