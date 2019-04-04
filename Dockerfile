@@ -58,4 +58,4 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
   && sudo dpkg -i google-chrome*.deb \
   && apt-get install -f -y
 
-CMD Xvfb -ac :7 -screen 0 1280x1024x8
+CMD Xvfb -ac :7 -screen 0 1920x1080x8
