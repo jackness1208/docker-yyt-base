@@ -82,6 +82,8 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
   && sudo dpkg -i google-chrome*.deb \
   && apt-get install -f -y
 
+RUN rm -rf google-chrome-stable_current_amd64.deb
+
 # 清除安装包
 RUN rm -rf /var/lib/apt/lists/*
 
